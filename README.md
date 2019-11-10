@@ -8,8 +8,7 @@ Roteador IPv4 e Firewall TCP/UDP
     - [ ] Descrever campos TCP e UPD
     - [ ] Modificar portas bloqueadas pelo firewall
 3. **Desenvolvimento de um Servidor HTTP**
-    - [ ] Desenvolver o servidor
-    - [ ] Adequar cliente anterior ao projeto
-    - [ ] Substituir comandos do roteador pelo servidor
+    - [x] Desenvolver o servidor
+    - [x] Adequar cliente ao projeto
 4. **Parte Teórica**
     - [ ] Relatório respondendo às 11 perguntas especificadas
