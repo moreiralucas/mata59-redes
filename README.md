@@ -11,7 +11,7 @@ git checkout origin/master -ft
 ```
 Os arquivos administrados pelo repo serão modificados enquanto todos os outros serão mantidos como estiverem.
 
-Para incluir novos arquivos no repositório, criar exceção no arquivo `.gitignore`.
+Para incluir novos arquivos no repositório, basta criar exceção no arquivo `.gitignore`.
 
 ## A fazer:
 1. **Desenvolvimento e Teste do Roteador**
