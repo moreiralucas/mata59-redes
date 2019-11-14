@@ -21,24 +21,38 @@ header ethernet_t {
 }
 
 header ipv4_t {
-    // TODO: completar com os campos do IPv4    
-    // DICA: 
-        // LEMBRE-SE QUE A ORDEM DOS CAMPOS IMPORTA. 
-        // OS CAMPOS QUE JA ESTAO PREENCHIDOS 
-        // ABAIXO PODEM ESTAR FORA DE ORDEM!
-        // Verifique a especificacao do protocolo IP.
+    bit<4>    version;
+    bit<4>    ihl;
+    bit<8>    typeOfService;
+    bit<16>   totalLength;
+    bit<16>   identification;
+    bit<3>    flags;
+    bit<13>   fragmentOffset;
+    bit<8>    ttl;
     bit<8>    protocol;
+    bit<16>   checksum;
+    ip4Addr_t srcAddr;
     ip4Addr_t dstAddr;
 }
 
 header tcp_t{
-    // TODO: completar com os campos do TCP
-    bit<16> dstPort;    
+    bit<16> srcPort;
+    bit<16> dstPort;
+    bit<32> seqNumber;
+    bit<32> ackNumber;
+    bit<4>  dataOffset;
+    bit<6>  reserved;
+    bit<6>  controlBits;
+    bit<16> window;
+    bit<16> checksum;
+    bit<16> urgentPointer;
 }
 
 header udp_t{
-    // TODO: completar com os campos do UDP    
+    bit<16> srcPort;   
     bit<16> dstPort;
+    bit<16> totalLength;
+    bit<16> checksum;
 }
 
 struct metadata {

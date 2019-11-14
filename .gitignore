@@ -1,2 +1,6 @@
-# Ignora arquivos de log
-logs/*
+# Ignora tudo
+*
+
+# Menos os arquivos modificados
+!.gitignore
+!router_ipv4.p4
