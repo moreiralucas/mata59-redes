@@ -2,8 +2,8 @@
 Roteador IPv4 e Firewall TCP/UDP
 
 ## Como iniciar repositório:
-Na pasta `router_ipv4`:
-```console
+Em um terminal na pasta `router_ipv4`, execute:
+```shell
 git init
 git remote add origin https://github.com/moreiralucas/mata59-redes.git
 git fetch
