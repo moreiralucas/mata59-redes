@@ -4,3 +4,4 @@
 # Menos os arquivos modificados
 !.gitignore
 !router_ipv4.p4
+!README.md
