@@ -5,3 +5,4 @@
 !.gitignore
 !README.md
 !router_ipv4.p4
+!s1-runtime.json

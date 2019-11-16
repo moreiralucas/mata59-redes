@@ -18,7 +18,7 @@ Para incluir novos arquivos no repositório, basta criar exceção no arquivo `.
     - [x] Descrever campos do cabeçalho IP
     - [x] Descrever campos TCP e UPD
 2. **Desenvolvimento do Firewall UDP/TCP**
-    - [ ] Modificar portas bloqueadas pelo firewall
+    - [x] Modificar portas bloqueadas pelo firewall
 3. **Desenvolvimento de um Servidor HTTP**
     - [x] Desenvolver o servidor
     - [x] Adequar cliente ao projeto
