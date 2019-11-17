@@ -83,7 +83,7 @@ run(){
     fi
     if [ $STATUS -eq 0 ]; then
         echo -e '\nStarting Mininet ...\n'    
-        sudo python "$RUN_SCRIPT" -t "$TOPO" -b simple_switch_grpc $MININET_SCRIPT --mac --arp
+        sudo python "$RUN_SCRIPT" -t "$TOPO" -b simple_switch_grpc $MININET_SCRIPT
     else
         echo "ERROR: unexpected error happened"
         exit $STATUS
