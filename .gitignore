@@ -1,2 +1,5 @@
-# Menos os arquivos modificados
+# Ignora todas as pastas
 **/
+
+# Menos a pasta redes
+!redes/
