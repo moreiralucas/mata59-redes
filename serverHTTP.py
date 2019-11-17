@@ -55,10 +55,7 @@ except ValueError:
 print("Iniciando servidor no IP " + IP + " e porta: " + str(PORTA))
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    host = socket.gethostbyname(IP)
-    print(host)
-
-    s.bind((host, PORTA))
+    s.bind((IP, PORTA))
     s.listen(5)
 
     while True:
