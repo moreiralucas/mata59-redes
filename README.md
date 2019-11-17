@@ -21,6 +21,6 @@ Para incluir novos arquivos no repositório, basta criar exceção no arquivo `.
     - [x] Modificar portas bloqueadas pelo firewall
 3. **Desenvolvimento de um Servidor HTTP**
     - [x] Desenvolver o servidor
-    - [ ] Adequar cliente ao projeto
+    - [x] Adequar cliente ao projeto
 4. **Parte Teórica**
     - [ ] Relatório respondendo às 11 perguntas especificadas
