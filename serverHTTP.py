@@ -1,7 +1,7 @@
-#!/usr/bin/env python3
 import socket
 import sys
 import re
+#import time
 import select
 import locale
 import datetime
@@ -37,70 +37,75 @@ Connection: Closed
 """
 }
 
-if len(sys.argv) < 3:
-    print('Uso: python3 serverHTTP.py <IP> <PORTA>')
-    sys.exit()
-
-IP = sys.argv[1]
 
 try:
-    PORTA = int(sys.argv[2])
 
-except ValueError:
-    print('Porta deve ser um número inteiro.')
-    sys.exit()
+    if len(sys.argv) < 3:
+        print('Uso: python3 echoServer.py <IP> <PORTA>')
+        sys.exit()
 
-#locale.setlocale(locale.LC_TIME, 'pt_BR') #locale para as datas e horarios
+    IP = sys.argv[1]
 
-print("Iniciando servidor no IP " + IP + " e porta: " + str(PORTA))
+    try:
+        PORTA = int(sys.argv[2])
 
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.bind((IP, PORTA))
-    s.listen(5)
+    except ValueError:
+        print('Porta deve ser um número inteiro.')
+        sys.exit()
 
-    while True:
+    #locale.setlocale(locale.LC_TIME, 'pt_BR') #locale para as datas e horarios
 
-        conexao, endCliente = s.accept() #bloqueia aguardando conexao
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 
-        conexao.setblocking(0) #tornar o socket de conexao nao bloqueante
+        s.bind((IP, PORTA))
+        s.listen()
 
-        with conexao:
+        while True:
 
-            print('Conexão de:' + str(endCliente) + "\n") #debug
+            conexao, endCliente = s.accept() #bloqueia aguardando conexao
 
-            stringDados = ''
-            padrao = re.compile('\r\n\r\n') 
+            conexao.setblocking(0) #tornar o socket de conexao nao bloqueante
 
-            while not re.search(padrao, stringDados): #esperando terminador do header HTTP
+            with conexao:
 
-                select.select([conexao], [], [], 5)
+                print('Conexão de: ' + str(endCliente) + "\n") #debug
 
-                temp = conexao.recv(1024)
+                stringDados = ''
+                padrao = re.compile('\n\n') 
 
-                if not temp:
-                    break
+                while not re.search(padrao, stringDados): #esperando terminador do header HTTP
+
+                    select.select([conexao], [], [], 5)
+
+                    temp = conexao.recv(1024)
+
+                    if not temp:
+                        break
+                    else:
+                        stringDados = stringDados + temp.decode('ASCII')
+                
+                print('Recebido:\n\n' + stringDados) #debug
+
+                padraoGET = re.compile('GET')
+                padraoPOST = re.compile('POST')
+
+                resposta = ''
+
+                if re.match(padraoGET, stringDados): 
+                    resposta = template['GET']
+
+                elif re.match(padraoPOST, stringDados):
+                    resposta = template['POST']
+
                 else:
-                    stringDados = stringDados + temp.decode('ASCII')
-            
-            print('Recebido:\n\n' + stringDados) #debug
+                    resposta = template['BAD']
 
-            padraoGET = re.compile('GET')
-            padraoPOST = re.compile('POST')
+                dataHora = datetime.datetime.now().strftime('%a, %d %b %Y %H:%M:%S GMT%z')
+                resposta = resposta.replace('@data', dataHora)
 
-            resposta = ''
+                print("Enviado: \n\n" + resposta)
 
-            if re.match(padraoGET, stringDados): 
-                resposta = template['GET']
+                conexao.sendall(resposta.encode('ASCII'))
 
-            elif re.match(padraoPOST, stringDados):
-                resposta = template['POST']
-
-            else:
-                resposta = template['BAD']
-
-            dataHora = datetime.datetime.now().strftime('%a, %d %b %Y %H:%M:%S GMT%z')
-            resposta = resposta.replace('@data', dataHora)
-
-            print("Enviado: \n\n" + resposta)
-
-            conexao.sendall(resposta.encode('ASCII'))
+except KeyboardInterrupt:
+    sys.exit()
