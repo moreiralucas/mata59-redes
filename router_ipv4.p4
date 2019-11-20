@@ -149,8 +149,6 @@ control MyIngress(inout headers hdr,
 
     action mac_forward(macAddr_t dstAddr, egressSpec_t port) {
         standard_metadata.egress_spec = port;
-        hdr.ethernet.srcAddr = hdr.ethernet.dstAddr;
-        hdr.ethernet.dstAddr = dstAddr;
     }
     
     // tabela match-action que verifica qual acao executar sobre o pacote
