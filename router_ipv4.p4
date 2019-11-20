@@ -142,8 +142,30 @@ control MyIngress(inout headers hdr,
     action ipv4_broadcast() {
         standard_metadata.mcast_grp = 1;
     }
+
+    action mac_broadcast() {
+        standard_metadata.mcast_grp = 1;
+    }
+
+    action mac_forward(macAddr_t dstAddr, egressSpec_t port) {
+        standard_metadata.egress_spec = port;
+    }
     
     // tabela match-action que verifica qual acao executar sobre o pacote
+    table mac_lpm {
+        key = {
+            hdr.ethernet.dstAddr: lpm;
+        }
+        actions = {
+            mac_forward;
+            mac_broadcast;
+            drop;
+            NoAction;
+        }
+        size = 1024;
+        default_action = drop();
+    }
+
     table ipv4_lpm {
         key = {
             hdr.ipv4.dstAddr: lpm;
@@ -183,6 +205,9 @@ control MyIngress(inout headers hdr,
     }
     
     apply {
+        if (hdr.ethernet.isValid()) {
+            mac_lpm.apply();        
+        }
         if (hdr.ipv4.isValid()) {
             ipv4_lpm.apply();        
         }
